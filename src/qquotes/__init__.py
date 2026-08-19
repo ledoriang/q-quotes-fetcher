@@ -1,0 +1,1 @@
+"""q-quotes-fetcher: multi-source quote fetcher for human intake."""

@@ -1,0 +1,69 @@
+# q-quotes-fetcher configuration.
+# All values can be overridden on the command line (see `get-passages --help`).
+
+[quotes]
+# Default number of quotes per run.
+count = 10
+
+# Repeat-prevention history file. Stored inside the repo (not committed).
+history = "data/history.jsonl"
+
+[format]
+# Spaces of breathing room on each side of the terminal output.
+margin_left = 4
+margin_right = 4
+
+[authors.en]
+# English Wikiquote thinkers (the surname is used to skip "Quotes about X" sections).
+names = [
+     # Classical & Stoic / Rationalist
+    "Seneca the Younger",
+    "Epictetus",
+    "Marcus Aurelius",
+    "Michel de Montaigne",
+    "Baruch Spinoza",
+    "Bertrand Russell",
+    "Plato",
+
+    # Existentialism & Absurdism
+    "Friedrich Nietzsche",
+    "Arthur Schopenhauer",
+    "Albert Camus",
+    "Søren Kierkegaard",
+    "Franz Kafka",
+    "Emil Cioran",
+    "Simone de Beauvoir",
+    
+    # Psychology & Meaning
+    "Carl Jung",
+    "Viktor Frankl",
+    "Erich Fromm",
+    "Ralph Waldo Emerson",
+    "Henry David Thoreau",
+    
+    # Literary Depth & Philosophy
+    "Leo Tolstoy",
+    "Fyodor Dostoevsky",
+    "Hermann Hesse",
+    "Jorge Luis Borges",
+    "Alan Watts",
+]
+
+
+[authors.asian]
+# Native Wikiquote page title -> { lang, name }. Used with --langs ja|zh.
+"老子" = { lang = "zh", name = "Laozi" }
+"莊子" = { lang = "zh", name = "Zhuangzi" }
+"孔子" = { lang = "zh", name = "Confucius" }
+"孟子" = { lang = "zh", name = "Mencius" }
+"孫子" = { lang = "zh", name = "Sun Tzu" }
+"墨子" = { lang = "zh", name = "Mozi" }
+"夏目漱石" = { lang = "ja", name = "Natsume Sōseki" }
+"太宰治" = { lang = "ja", name = "Osamu Dazai" }
+"坂口安吾" = { lang = "ja", name = "Ango Sakaguchi" }
+"樋口一葉" = { lang = "ja", name = "Higuchi Ichiyō" }
+"宮沢賢治" = { lang = "ja", name = "Kenji Miyazawa" }
+"岡本太郎" = { lang = "ja", name = "Tarō Okamoto" }
+"芥川龍之介" = { lang = "ja", name = "Ryūnosuke Akutagawa" }
+"三島由紀夫" = { lang = "ja", name = "Yukio Mishima" }
+"松尾芭蕉" = { lang = "ja", name = "Matsuo Bashō" }
