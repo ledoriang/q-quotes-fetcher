@@ -23,6 +23,7 @@ META_MARKERS = re.compile(
     r"epigraph\b|http|misquoted|grammatically corrected|sometimes quoted|"
     r"motto of|parerga|§|translated\b|\bvol\.?\s*\d|\binterview\b|hays translation|"
     r"\btrans\.\b|,\s*ch\.?\s*\d|"
+    r"\bpp\.\s*\d|\bno\.\s*\d{1,4}\b|,\s*in\s+[A-Z]|\bp\.\s*\d{1,4}\s*$|"
     r"essay on\s+[\"“'‘]|\([^)]*translation\)|"
     r"\(\s*(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+"
     r"(18|19|20)\d{2}\s*\)",

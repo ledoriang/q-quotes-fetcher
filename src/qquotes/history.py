@@ -21,7 +21,7 @@ def load_history(path: str | Path) -> set[str]:
                 for line in fh:
                     line = line.strip()
                     if line:
-                        keys.add(line)
+                        keys.add(line.split("\t", 1)[0])
         except OSError:
             pass
     return keys

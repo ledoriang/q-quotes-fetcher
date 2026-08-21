@@ -31,6 +31,15 @@ def fetch_typefit() -> list[tuple[str, str]]:
         return []
 
 
+def fetch_stoic_quotes(count: int = 10) -> list[tuple[str, str]]:
+    """Random Stoic quotes from the stoic-quotes.com feed (the 'daily stoic' API)."""
+    try:
+        data = _get_json(f"https://stoic-quotes.com/api/quotes", timeout=10)
+        return [(item.get("text"), item.get("author")) for item in data if item.get("text")]
+    except Exception:
+        return []
+
+
 def fetch_stoic_api() -> tuple[str, str] | None:
     """Last-resort fallback from a stoic-quotes endpoint."""
     try:

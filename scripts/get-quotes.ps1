@@ -15,3 +15,6 @@ try {
 } finally {
     Pop-Location
 }
+
+Write-Host ""
+Read-Host "Press Enter to close..."
