@@ -70,9 +70,13 @@ names = ["Seneca the Younger", "Epictetus", ...]
 | --- | --- | --- |
 | Wikiquote (`en.wikiquote.org`) | Parsed wikitext quotes from a configurable bank | English |
 | Wikiquote (`ja` / `zh` editions) | Eastern aphorisms, translated via MyMemory | → English |
-| zenquotes.io | Random quotes API, no key | English |
-| type.fit `/api/quotes` | Static ~1.6k quote dataset | English |
-| stoic-quotes.com | Last-resort fallback | English |
+| stoic-quotes.com | Daily Stoic feed (always contributes 2 quotes) | English |
+| zenquotes.io | Random quotes API, no key (1 quote) | English |
+| type.fit `/api/quotes` | Static quote dataset (1 quote) | English |
+
+Each batch reserves 2 quotes from the Stoic feed and 1 from each of
+zenquotes.io and type.fit (best-effort: only fresh, unshown quotes are used),
+then fills the rest of `--count` from the Wikiquote bank.
 
 ## Repeat prevention
 

@@ -72,10 +72,42 @@ def main(argv: list[str] | None = None) -> int:
             exclude.add(key)
             pool.append({"text": text, "author": author, "source": source})
 
-    def add_capped(candidates: list[tuple[str, str]], source: str, cap: int) -> None:
+    def add_capped(candidates: list[tuple[str, str]], source: str, cap: int) -> int:
         random.shuffle(candidates)
-        for text, author in candidates[:cap]:
+        added = 0
+        for text, author in candidates:
+            if added >= cap:
+                break
+            if quote_key(text) in exclude:
+                continue
             add(text, author, source)
+            added += 1
+        return added
+
+    # --- Reserved slots: 2 from the daily Stoic feed, then 1 from each
+    # verifiable API (zenquotes.io, type.fit). Quotas shrink to fit --count.
+    guaranteed: list[dict] = []
+    if not args.no_other_sources:
+        stoic_want = min(2, count)
+        zq_want = min(1, count - stoic_want)
+        tf_want = min(1, count - stoic_want - zq_want)
+
+        base = len(pool)
+        add_capped(feeds.fetch_stoic_quotes(), "stoic-quotes.com", stoic_want)
+        guaranteed += pool[base:]
+        print(f"  [ok] Stoic API: {len(pool) - base}/{stoic_want} reserved", file=sys.stderr)
+
+        base = len(pool)
+        add_capped(feeds.fetch_zenquotes(10), "zenquotes.io", zq_want)
+        guaranteed += pool[base:]
+        print(f"  [ok] zenquotes.io: {len(pool) - base}/{zq_want} reserved", file=sys.stderr)
+
+        base = len(pool)
+        add_capped(feeds.fetch_typefit(), "type.fit", tf_want)
+        guaranteed += pool[base:]
+        print(f"  [ok] type.fit: {len(pool) - base}/{tf_want} reserved", file=sys.stderr)
+
+        pool = pool[len(guaranteed):]  # keep pool for wikiquote fill only
 
     # --- English Wikiquote ---
     selected = random.sample(en_authors, min(6, len(en_authors)))
@@ -114,15 +146,8 @@ def main(argv: list[str] | None = None) -> int:
             print(f"  [ok] {english} ({code}): {len(raw)} raw, {len(translated)} translated", file=sys.stderr)
             time.sleep(REQUEST_DELAY)
 
-    # --- Other sources ---
-    if not args.no_other_sources:
-        zq = feeds.fetch_zenquotes(count * 2)
-        add_capped(zq, "zenquotes.io", count)
-        tf = feeds.fetch_typefit()
-        add_capped(tf, "type.fit", count)
-
     random.shuffle(pool)
-    final = pool[:count]
+    final = list(guaranteed) + pool[: max(0, count - len(guaranteed))]
     if len(final) < count:
         print(
             f"  [..] only {len(final)} fresh quotes available "
